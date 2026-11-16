@@ -248,7 +248,7 @@ CLAUDE.md, README.md
 ## Offene Punkte
 - Silbenvorrat, Sperrliste und Monster-Baukasten sind freigegeben (16.11.2026).
 - Etappe 3 getestet, Impressum freigegeben (16.11.2026). Als Nächstes: GitHub-Repo anlegen und pushen (nur nach ausdrücklicher Freigabe), dann Eintrag auf der Übersichtsseite.
-- Erster Commit und Push am 16.11.2026. Der Bau ist grün. Das Veröffentlichen klappt erst, wenn unter *Settings → Pages* „GitHub Actions“ als Quelle gewählt ist, danach den Lauf neu starten. Ein `apple-touch-icon.png` fehlt noch.
-- Nach dem Live-Gang: Übersichtsseite mitlaeuferfotografie.github.io und Tabelle „Die Apps“ in der allgemeinen Anweisung ergänzen, `Baukasten_Aufgabentypen.md` ergänzen (neuer Typ „Silben-Spielautomat“).
+- Erster Commit und Push am 16.11.2026, GitHub Pages (Quelle „GitHub Actions“) eingeschaltet, Actions-Lauf grün. Ein `apple-touch-icon.png` fehlt noch.
+- Live seit 16.11.2026. Eingetragen auf der Übersichtsseite (Deutsch, „Klasse 1 · Silben lesen“, mit Arbeitsblatt-Zeile), in der Tabelle „Die Apps“ und im Baukasten als Typ 21 „Silben-Spielautomat“ (Kürzel SM). Noch offen: Screenshot `Baukasten_Bilder	yp-21.png` und Karte in `Baukasten_Übersicht.html`.
 - README geschrieben (16.11.2026). Den Lehrplan-Wortlaut konnte Claude nicht prüfen (das PDF auf lehrplannavigator.nrw.de ließ sich nicht als Text lesen), im README ist er als „vor der Veröffentlichung prüfen“ markiert.
 - Arbeitsblätter im Druck von der Lehrkraft geprüft und für gut befunden (16.11.2026).
