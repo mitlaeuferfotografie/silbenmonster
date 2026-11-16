@@ -13,7 +13,7 @@ Ein Spielautomat mit 2 oder 3 Silbenwalzen. Ein Hebel (oder Knopf) lässt die Wa
 - Didaktischer Kern: Fantasiewörter lassen sich nicht über das Bild oder den Zusammenhang erraten. Das Kind muss die Silben wirklich erlesen und zusammenziehen (Synthese).
 
 ## Lehrplanbezug
-Lehrplan NRW Grundschule Deutsch, Bereich **Lesen – mit Texten und Medien umgehen**, Schwerpunkt *über Lesefähigkeiten verfügen*, Kompetenzerwartung bis Ende der Schuleingangsphase: Die Schülerinnen und Schüler **„nutzen Lesestrategien zum Erlesen von Wörtern (u. a. Silben)“**. Vor dem Eintrag ins README den genauen Wortlaut im aktuellen Lehrplan prüfen.
+Lehrplan für die Primarstufe NRW, Fach Deutsch (2021), Bereich **Lesen – mit Texten und Medien umgehen**, Schwerpunkt *Über Lesefähigkeiten verfügen*, Kompetenzerwartungen am Ende der Schuleingangsphase (S. 23): Die Schülerinnen und Schüler **„identifizieren häufig wiederkehrende Morpheme (u. a. ver-, vor-, nach- als Präfixe, bekannte Stamm-Morpheme) und Silben auf einen Blick“** und **„erlesen Texte durch die Identifikation von Wörtern und Sätzen“**. (Am 17.11.2026 im Lehrplan-PDF geprüft: Die frühere Formulierung „nutzen Lesestrategien zum Erlesen von Wörtern (u. a. Silben)“ steht so nicht im Lehrplan. Der Schwerpunkt „Lesestrategien nutzen“ betrifft das Textverstehen, nicht das Erlesen von Wörtern.)
 Medienkompetenzrahmen NRW: 1.2 Digitale Werkzeuge (eine Lern-App zielgerichtet bedienen).
 
 ## Einordnung
@@ -251,5 +251,5 @@ CLAUDE.md, README.md
 - Etappe 3 getestet, Impressum freigegeben (16.11.2026). Als Nächstes: GitHub-Repo anlegen und pushen (nur nach ausdrücklicher Freigabe), dann Eintrag auf der Übersichtsseite.
 - Erster Commit und Push am 16.11.2026, GitHub Pages (Quelle „GitHub Actions“) eingeschaltet, Actions-Lauf grün.
 - Live seit 16.11.2026. Eingetragen auf der Übersichtsseite (Deutsch, „Klasse 1 · Silben lesen“, mit Arbeitsblatt-Zeile), in der Tabelle „Die Apps“ und im Baukasten als Typ 21 „Silben-Spielautomat“ (Kürzel SM). Screenshot `Baukasten_Bilder	yp-21.png` und Karte in `Baukasten_Übersicht.html` ergänzt (Filter „Ohne Tippen“).
-- README geschrieben (16.11.2026). Den Lehrplan-Wortlaut konnte Claude nicht prüfen (das PDF auf lehrplannavigator.nrw.de ließ sich nicht als Text lesen), im README ist er als „vor der Veröffentlichung prüfen“ markiert.
+- README geschrieben (16.11.2026). Lehrplan-Wortlaut am 17.11.2026 im PDF (über Chrome) geprüft und richtiggestellt.
 - Arbeitsblätter im Druck von der Lehrkraft geprüft und für gut befunden (16.11.2026).

@@ -10,7 +10,11 @@ Angeregt durch die „Monstermaschine“ von @frau_behrens_ (Instagram). Eigene 
 
 ## Lehrplanbezug
 
-- Lehrplan NRW Grundschule Deutsch, Bereich **Lesen – mit Texten und Medien umgehen**, Schwerpunkt *über Lesefähigkeiten verfügen*, Kompetenzerwartung bis Ende der Schuleingangsphase: Lesestrategien zum Erlesen von Wörtern nutzen (u. a. Silben). *Wortlaut vor der Veröffentlichung im aktuellen Lehrplan prüfen.*
+- Lehrplan für die Primarstufe in NRW, Fach Deutsch (2021), Bereich **Lesen – mit Texten und Medien umgehen**, Schwerpunkt *Über Lesefähigkeiten verfügen*, Kompetenzerwartungen am Ende der Schuleingangsphase (S. 23). Die Schülerinnen und Schüler
+  - „identifizieren häufig wiederkehrende Morpheme (u. a. ver-, vor-, nach- als Präfixe, bekannte Stamm-Morpheme) und Silben auf einen Blick“,
+  - „erlesen Texte durch die Identifikation von Wörtern und Sätzen“.
+
+  Das Silbenmonster übt vor allem das schnelle Erkennen wiederkehrender Silben und das Zusammenziehen zu einem (Fantasie-)Wort als Grundlage dafür.
 - Medienkompetenzrahmen NRW: 1.2 Digitale Werkzeuge (eine Lern-App zielgerichtet bedienen).
 
 ## Einsatz
