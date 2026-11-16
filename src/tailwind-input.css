@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Schriften werden mit der App ausgeliefert (kein Google, kein CDN) */
+@font-face { font-family: 'Grundschrift'; src: url('fonts/playwrite-de-grund-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Andika'; src: url('fonts/andika-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Andika'; src: url('fonts/andika-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+html, body { overscroll-behavior: none; }
+body { font-family: 'Andika', system-ui, sans-serif; }
+button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.spielflaeche { user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+.schrift-grund { font-family: 'Grundschrift', 'Andika', system-ui, sans-serif; }
+.schrift-andika { font-family: 'Andika', system-ui, sans-serif; }
+
+/* Hebel ziehen, Monster freut sich (einmal, ca. 1,2 s), Vorhang */
+@keyframes hebel { 0% { transform: translateY(0); } 40% { transform: translateY(46px); } 100% { transform: translateY(0); } }
+.anim-hebel { animation: hebel 0.55s ease-in-out; }
+@keyframes freuen { 0% { transform: scale(0.6) translateY(20px); opacity: 0; } 35% { transform: scale(1.08) translateY(-10px); opacity: 1; } 55% { transform: scale(0.97) translateY(0); } 75% { transform: scale(1.03) translateY(-4px); } 100% { transform: scale(1) translateY(0); } }
+.anim-freuen { animation: freuen 1.2s ease-out; }
+@keyframes wackeln { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.anim-wackeln { animation: wackeln 0.3s ease-in-out 2; }
+@keyframes einblenden { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.anim-ein { animation: einblenden 0.25s ease-out; }
+@media (prefers-reduced-motion: reduce) { .anim-hebel, .anim-freuen, .anim-wackeln, .anim-ein { animation: none; } }
+
+/* Arbeitsblätter: A4 hoch, Druck über window.print() */
+.sheet-page { width: 210mm; height: 297mm; overflow: hidden; position: relative; box-sizing: border-box; }
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  html, body { background: #fff !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print { display: none !important; }
+  .druck-huelle { width: auto !important; height: auto !important; }
+  .druck-skala { transform: none !important; width: auto !important; }
+  .sheet-page { box-shadow: none !important; margin: 0 !important; break-after: page; page-break-after: always; }
+  .sheet-page:last-child { break-after: auto; page-break-after: auto; }
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Silbenmonster – Monster-Baukasten</title>
+<!-- Übersicht aller Teile in Farbe und als Umriss (Monster-Check, Etappe 2). Wird nicht ausgeliefert.
+     Aufruf: im Repo-Ordner „python -m http.server 8124“, dann http://localhost:8124/werkzeuge/monster_uebersicht.html -->
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 16px; background: #f6f5f0; color: #222; }
+  h1 { font-size: 22px; margin: 0 0 4px; } h2 { font-size: 18px; margin: 0 0 4px; }
+  .klein { font-size: 13px; color: #666; }
+  section { background: #fff; border-radius: 12px; padding: 12px 16px; margin: 14px 0; }
+  .raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-top: 8px; }
+  .kachel { border: 1px solid #ddd; border-radius: 10px; padding: 6px; text-align: center; }
+  .kachel .paar { display: flex; gap: 2px; } .kachel .paar > * { flex: 1; }
+  .kachel svg { width: 100%; height: auto; display: block; }
+  .kachel b { display: block; font-size: 15px; } .kachel span { font-size: 12px; color: #666; }
+  .farbe { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #2b2b2b; margin: 4px auto; }
+  .name { font-size: 26px; } .name span.s0 { color: #1f5fbf; font-size: inherit; } .name span.s1 { color: #d0312d; font-size: inherit; }
+  .zeile { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  input { font: inherit; font-size: 18px; padding: 8px; border: 2px solid #999; border-radius: 8px; width: 200px; }
+  button { font: inherit; border: 2px solid #999; background: #fff; border-radius: 10px; padding: 8px 14px; cursor: pointer; }
+  .gross { display: flex; gap: 16px; flex-wrap: wrap; } .gross svg { width: 260px; height: auto; }
+  .reihe { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .reihe .kachel svg { width: 100%; }
+</style>
+</head>
+<body>
+<h1>Silbenmonster – Monster-Baukasten</h1>
+<div class="klein">Alle Teile in Farbe und als Umriss (für die Ausmal-Blätter). Je Kachel links Farbe, rechts Umriss. Darunter steht, welche Buchstaben das Teil auslösen.</div>
+
+<section>
+  <h2>Ausprobieren</h2>
+  <div class="zeile"><input id="eingabe" value="lo-mu-fi"><button id="zeigen">zeigen</button><span class="klein">Silben mit Bindestrich, z. B. ra-bot oder lo-mu-fin</span></div>
+  <div class="gross" id="probe"></div>
+</section>
+
+<section>
+  <h2>Reihen: Nur eine Silbe ändert sich</h2>
+  <div class="klein">So wirkt das Festhalten einer Walze. Die 1. Silbe bestimmt Körper und Farbe, der Vokal der 2. Silbe den Mund, der Konsonant die Augen.</div>
+  <div class="reihe" id="reihen"></div>
+</section>
+
+<section><h2>Körper (1. Silbe, Konsonant)</h2><div class="klein">16 Formen. Der Vokal der 1. Silbe bestimmt die Farbe.</div><div class="raster" id="koerper"></div></section>
+<section><h2>Farben (1. Silbe)</h2><div class="klein">10 Farben. Je Körper ergeben die 7 Vokale 7 verschiedene Farben.</div><div class="raster" id="farben"></div></section>
+<section><h2>Augen (2. Silbe, Konsonant)</h2><div class="raster" id="augen"></div></section>
+<section><h2>Münder (2. Silbe, Vokal)</h2><div class="raster" id="muender"></div></section>
+<section><h2>Extras (3. Silbe, Konsonant; bei 2 Silben die 2. Silbe)</h2><div class="raster" id="extras"></div></section>
+<section><h2>Muster (3. Silbe, Vokal; bei 2 Silben die 2. Silbe)</h2><div class="raster" id="muster"></div></section>
+<section><h2>Zubehör (Endlaut der letzten Silbe, nur Stufe 3)</h2><div class="raster" id="zubehoer"></div></section>
+
+<section>
+  <h2>Zufällige Monster</h2>
+  <div class="zeile"><button id="neu">Neue Monster</button><span class="klein">zufällige Silben der Stufe 3, hier ohne Sperrliste (nur um die Vielfalt zu sehen)</span></div>
+  <div class="reihe" id="zufall"></div>
+</section>
+
+<script type="module">
+import { KOERPER, FARBEN, AUGEN, MUENDER, EXTRAS, MUSTER, ZUBEHOER, monsterSvg, merkmaleFuerName } from '../src/monster.js';
+
+const T = await (await fetch('../src/merkmale.json')).json();
+const D = await (await fetch('../src/silben.json')).json();
+const $ = id => document.getElementById(id);
+const gross = s => s[0].toUpperCase() + s.slice(1);
+const nameHtml = sil => sil.map((s, i) => `<span class="s${i % 2}">${i === 0 ? gross(s) : s}</span>`).join('');
+const KONS = ['m', 'l', 's', 'n', 'r', 'f', 'w', 'h', 'sch', 'd', 't', 'b', 'p', 'g', 'k', 'z'];
+const VOK = ['a', 'e', 'i', 'o', 'u', 'ei', 'au'];
+
+// Welche Konsonanten/Vokale lösen Feld f mit Wert w aus?
+function ausloeser(f, w) {
+  const k = new Set(), v = new Set();
+  for (const [s, m] of Object.entries(T.silben)) if (m[f] === w) {
+    const kk = KONS.find(x => s.startsWith(x) && VOK.includes(s.slice(x.length)));
+    if (kk) { k.add(kk); v.add(s.slice(kk.length)); }
+  }
+  return { k: [...k], v: [...v] };
+}
+
+const basis = { koerper: 0, farbe: 1, augen: 0, mund: 0, extra: -1, muster: 0, zubehoer: 0 };
+const kachel = (titel, unter, m) => `<div class="kachel"><b>${titel}</b><div class="paar">${monsterSvg(m)}${monsterSvg(m, { umriss: true })}</div><span>${unter}</span></div>`;
+
+$('koerper').innerHTML = KOERPER.map((K, i) => kachel(K.n, 'Konsonant: ' + ausloeser(0, i).k.join(', '), { ...basis, koerper: i, farbe: i % 10 })).join('');
+$('farben').innerHTML = FARBEN.map(([n, c], i) => {
+  const s = Object.entries(T.silben).filter(([, m]) => m[1] === i).map(([s]) => s);
+  return `<div class="kachel"><b>${n}</b><div class="farbe" style="background:${c}"></div><span>${s.slice(0, 14).join(', ')}${s.length > 14 ? ' …' : ''}</span></div>`;
+}).join('');
+$('augen').innerHTML = AUGEN.map((n, i) => kachel(n, 'Konsonant: ' + ausloeser(2, i).k.join(', '), { ...basis, augen: i })).join('');
+$('muender').innerHTML = MUENDER.map((n, i) => kachel(n, 'Vokal: ' + ausloeser(3, i).v.join(', '), { ...basis, mund: i })).join('');
+$('extras').innerHTML = EXTRAS.map((n, i) => kachel(n, 'Konsonant: ' + ausloeser(4, i).k.join(', '), { ...basis, extra: i, koerper: i % 2 ? 3 : 0 })).join('');
+$('muster').innerHTML = MUSTER.map((n, i) => kachel(n, 'Vokal: ' + ausloeser(5, i).v.join(', '), { ...basis, muster: i, farbe: 5 })).join('');
+const endl = Object.fromEntries(Object.entries(T.endlaute).map(([e, z]) => [z, e]));
+$('zubehoer').innerHTML = ZUBEHOER.map((n, i) => i === 0 ? '' : kachel(n, 'Endlaut: ' + (endl[i] || '–'), { ...basis, zubehoer: i, farbe: 2 })).join('');
+
+function zeige(text, ziel) {
+  const sil = text.trim().toLowerCase().split('-').filter(Boolean);
+  const m = sil.length >= 2 && sil.length <= 3 ? merkmaleFuerName(sil, T) : null;
+  if (!m) { ziel.innerHTML = '<span class="klein">Diese Silben gibt es nicht im Vorrat (2–3 Silben, nur die letzte darf geschlossen sein).</span>'; return; }
+  const info = `${KOERPER[m.koerper].n}, ${FARBEN[m.farbe][0]}, Augen ${AUGEN[m.augen]}, Mund ${MUENDER[m.mund]}, ${EXTRAS[m.extra]}, ${MUSTER[m.muster]}${m.zubehoer ? ', ' + ZUBEHOER[m.zubehoer] : ''}`;
+  ziel.innerHTML = `<div><div class="name">${nameHtml(sil)}</div>${monsterSvg(m)}</div><div><div class="name">&nbsp;</div>${monsterSvg(m, { umriss: true })}</div><div class="klein" style="flex-basis:100%">${info}</div>`;
+}
+$('zeigen').onclick = () => zeige($('eingabe').value, $('probe'));
+$('eingabe').onkeydown = e => { if (e.key === 'Enter') $('zeigen').onclick(); };
+zeige('lo-mu-fi', $('probe'));
+
+const klein = sil => { const m = merkmaleFuerName(sil, T); return `<div class="kachel"><div class="name">${nameHtml(sil)}</div>${monsterSvg(m)}</div>`; };
+$('reihen').innerHTML = [['lo', 'mu'], ['lo', 'ma'], ['lo', 'mi'], ['lo', 'mo'], ['la', 'mu'], ['li', 'mu'], ['lo', 'su'], ['lo', 'fu']].map(klein).join('');
+
+// Zufällige erlaubte Namen (einfach: ohne Sperrliste, nur zur Ansicht der Vielfalt)
+function zufall() {
+  const st = D.stufen['3'], r = a => a[Math.floor(Math.random() * a.length)];
+  const offen = st.konsonanten.flatMap(k => st.vokale.map(v => k + v));
+  const out = [];
+  for (let i = 0; i < 16; i++) {
+    const n = Math.random() < 0.5 ? 2 : 3, sil = [...Array(n - 1)].map(() => r(offen));
+    let last = r(offen); if (Math.random() < 0.4) last += r(st.endlaute.filter(e => !(st.endlaut_nicht_nach?.[e] || []).some(v => last.endsWith(v))));
+    sil.push(last); out.push(klein(sil));
+  }
+  $('zufall').innerHTML = out.join('');
+}
+$('neu').onclick = zufall; zufall();
+</script>
+</body>
+</html>

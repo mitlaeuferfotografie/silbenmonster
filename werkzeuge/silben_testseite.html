@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Silbenmonster – Testseite Silben</title>
+<!-- Nur zum Testen von src/silben.json (Etappe 1), wird nicht ausgeliefert.
+     Aufruf: im Repo-Ordner „python -m http.server 8123“, dann http://localhost:8123/werkzeuge/silben_testseite.html
+     Die Regeln entsprechen werkzeuge/silben_check.py und kommen später als namenErlaubt() in src/App.jsx. -->
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 16px; background: #f6f5f0; color: #222; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .klein { font-size: 13px; color: #666; }
+  .zeile { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; }
+  .zeile > b { width: 110px; }
+  button { font: inherit; border: 2px solid #999; background: #fff; border-radius: 10px; padding: 8px 14px; cursor: pointer; touch-action: manipulation; }
+  button.an { background: #2b6cb0; color: #fff; border-color: #2b6cb0; }
+  button.bst { min-width: 48px; }
+  button.bst.aus { background: #eee; color: #aaa; border-style: dashed; }
+  button.gross { font-size: 22px; padding: 14px 28px; background: #e67e22; color: #fff; border-color: #c96512; }
+  .automat { display: flex; gap: 10px; margin: 18px 0 6px; }
+  .walze { width: 110px; height: 90px; border: 3px solid #444; border-radius: 12px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+  .name { font-size: 54px; margin: 8px 0 0; letter-spacing: 1px; }
+  .s0 { color: #1f5fbf; } .s1 { color: #d0312d; }
+  .bogen { display: inline-block; border-bottom: 3px solid currentColor; border-radius: 0 0 50% 50% / 0 0 14px 14px; padding: 0 2px 6px; margin: 0 1px; }
+  .liste { columns: 4 160px; font-size: 22px; }
+  .liste div { break-inside: avoid; padding: 2px 0; }
+  .hinweis { background: #fff3cd; border: 1px solid #e0c060; padding: 8px 12px; border-radius: 8px; }
+  .ok { color: #1d7a33; font-weight: bold; } .nein { color: #b02a2a; font-weight: bold; }
+  input { font: inherit; font-size: 18px; padding: 8px; border: 2px solid #999; border-radius: 8px; width: 200px; }
+  section { background: #fff; border-radius: 12px; padding: 12px 16px; margin: 12px 0; }
+</style>
+</head>
+<body>
+<h1>Silbenmonster – Testseite für den Silbenvorrat</h1>
+<div class="klein">Nur zum Prüfen von Silben, Regeln und Sperrliste (Etappe 1). Automat, Monster und Ton kommen später.</div>
+
+<section>
+  <div class="zeile"><b>Stufe</b><span id="stufen"></span></div>
+  <div class="zeile"><b>Silben</b><span id="silbenzahl"></span></div>
+  <div class="zeile"><b>Buchstaben</b><span id="buchstaben"></span></div>
+  <div class="zeile"><b></b><button id="alle">alle</button> <span class="klein" id="vorrat"></span></div>
+  <div id="warnung"></div>
+</section>
+
+<section>
+  <button class="gross" id="drehen">Drehen</button>
+  <div class="automat" id="walzen"></div>
+  <div class="name" id="nameAnzeige"></div>
+</section>
+
+<section>
+  <div class="zeile"><button id="viele">30 Namen ziehen</button></div>
+  <div class="liste" id="liste"></div>
+</section>
+
+<section>
+  <div class="zeile"><b>Name prüfen</b><input id="eingabe" placeholder="lo-mu-fi"><button id="pruefen">prüfen</button></div>
+  <div id="ergebnis"></div>
+  <div class="klein">Silben mit Bindestrich trennen. Geprüft wird mit der gewählten Stufe.</div>
+</section>
+
+<script>
+const MEHR = ['sch', 'ei', 'au'];
+const VOKALE = ['a', 'e', 'i', 'o', 'u', 'ei', 'au'];
+const tok = s => { const t = []; for (let i = 0; i < s.length;) { const g = MEHR.find(x => s.startsWith(x, i)) || s[i]; t.push(g); i += g.length; } return t; };
+const flach = x => x.replace(/-/g, '').toLowerCase();
+const gross = s => s[0].toUpperCase() + s.slice(1);
+
+let D, unpassendRe, ganz, gesperrteSilben;
+const zustand = { stufe: '1', silben: '2', aus: new Set() };
+
+function silben(stufe) {
+  const st = D.stufen[stufe], frei = g => !zustand.aus.has(g);
+  const k = st.konsonanten.filter(frei), v = st.vokale.filter(frei), e = st.endlaute.filter(frei);
+  const offen = k.flatMap(a => v.map(b => a + b)).filter(s => !gesperrteSilben.has(s));
+  const nichtNach = st.endlaut_nicht_nach || {};
+  const zu = k.flatMap(a => v.flatMap(b => e.filter(c => !(nichtNach[c] || []).includes(b)).map(c => a + b + c))).filter(s => !gesperrteSilben.has(s));
+  return { offen, zu, k, v };
+}
+
+// gleiche Regeln wie silben_check.py → später namenErlaubt() in App.jsx
+function grund(sil, offenSet) {
+  const r = D.regeln;
+  if (r.keine_gleiche_silbe_direkt_hintereinander) for (let i = 1; i < sil.length; i++) if (sil[i] === sil[i - 1]) return 'gleiche Silbe hintereinander';
+  if (r.geschlossene_silbe_nur_am_ende) for (const s of sil.slice(0, -1)) if (!offenSet.has(s)) return 'geschlossene Silbe nicht am Ende';
+  if (r.e_nur_in_letzter_silbe) for (const s of sil.slice(0, -1)) if (tok(s).at(-1) === 'e') return 'e nicht in letzter Silbe';
+  const name = sil.join('');
+  const m = name.match(unpassendRe); if (m) return 'unpassend (' + m[0] + ')';
+  if (ganz[name]) return ganz[name];
+  return null;
+}
+
+function ziehe() {
+  const { offen, zu } = silben(zustand.stufe), offenSet = new Set(offen);
+  const n = zustand.silben === 'mix' ? (Math.random() < 0.5 ? 2 : 3) : +zustand.silben;
+  const r = a => a[Math.floor(Math.random() * a.length)];
+  for (let i = 0; i < 1000; i++) {
+    const sil = [...Array(n - 1)].map(() => r(offen)).concat([r(offen.concat(zu))]);
+    if (!grund(sil, offenSet)) return sil;
+  }
+  return null;
+}
+
+function nameHtml(sil) {
+  return sil.map((s, i) => `<span class="bogen s${i % 2}">${i === 0 ? gross(s) : s}</span>`).join('');
+}
+
+function knopfReihe(el, werte, aktiv, setze, beschr = x => x) {
+  el.innerHTML = '';
+  for (const w of werte) {
+    const b = document.createElement('button'); b.textContent = beschr(w);
+    if (w === aktiv()) b.className = 'an';
+    b.onclick = () => { setze(w); zeichne(); };
+    el.append(b, ' ');
+  }
+}
+
+function zeichne() {
+  knopfReihe(stufen, ['1', '2', '3'], () => zustand.stufe, w => zustand.stufe = w);
+  knopfReihe(silbenzahl, ['2', '3', 'mix'], () => zustand.silben, w => zustand.silben = w, w => w === 'mix' ? 'gemischt' : w);
+  const st = D.stufen[zustand.stufe];
+  buchstaben.innerHTML = '';
+  for (const g of [...st.vokale, ...st.konsonanten]) {
+    const b = document.createElement('button'); b.textContent = g;
+    b.className = 'bst' + (zustand.aus.has(g) ? ' aus' : '');
+    b.onclick = () => { zustand.aus.has(g) ? zustand.aus.delete(g) : zustand.aus.add(g); zeichne(); };
+    buchstaben.append(b, ' ');
+  }
+  const { offen, zu, k, v } = silben(zustand.stufe);
+  vorrat.textContent = `${offen.length} offene Silben` + (zu.length ? `, ${zu.length} Endsilben` : '');
+  const zuWenig = v.length < D.regeln.mindestens_vokale || k.length < D.regeln.mindestens_konsonanten;
+  warnung.innerHTML = zuWenig ? `<div class="hinweis">Zu wenige Buchstaben frei: mindestens ${D.regeln.mindestens_vokale} Vokale und ${D.regeln.mindestens_konsonanten} Konsonanten. (So erscheint es später im Lehrer-Bereich.)</div>` : '';
+  drehen.disabled = viele.disabled = zuWenig;
+}
+
+function zeige(sil) {
+  walzen.innerHTML = sil ? sil.map((s, i) => `<div class="walze">${i === 0 ? gross(s) : s}</div>`).join('') : '';
+  nameAnzeige.innerHTML = sil ? nameHtml(sil) : '<span class="klein">Kein erlaubter Name gefunden.</span>';
+}
+
+fetch('../src/silben.json').then(r => r.json()).then(d => {
+  D = d;
+  const sp = d.sperrliste;
+  unpassendRe = new RegExp(sp.unpassend.map(flach).sort((a, b) => b.length - a.length).join('|'));
+  gesperrteSilben = new Set(sp.unpassende_silben);
+  ganz = {};
+  for (const l of ['echte_woerter', 'vornamen', 'lesestart', 'lehrkraft']) for (const x of sp[l]) ganz[flach(x)] ??= { echte_woerter: 'echtes Wort', vornamen: 'Vorname', lesestart: 'Lesestart-Wort', lehrkraft: 'Nachtrag Lehrkraft' }[l];
+  alle.onclick = () => { zustand.aus.clear(); zeichne(); };
+  drehen.onclick = () => zeige(ziehe());
+  viele.onclick = () => { liste.innerHTML = [...Array(30)].map(() => { const s = ziehe(); return `<div>${s ? nameHtml(s) : '–'}</div>`; }).join(''); };
+  pruefen.onclick = () => {
+    const sil = eingabe.value.trim().toLowerCase().split('-').filter(Boolean);
+    if (sil.length < 2) { ergebnis.innerHTML = '<span class="nein">Bitte mindestens 2 Silben mit Bindestrich eingeben.</span>'; return; }
+    const { offen, zu } = silben(zustand.stufe), offenSet = new Set(offen), alleSet = new Set(offen.concat(zu));
+    const fremd = sil.filter(s => !alleSet.has(s));
+    if (fremd.length) { ergebnis.innerHTML = `<span class="nein">Silbe nicht im Vorrat von Stufe ${zustand.stufe}${zustand.aus.size ? ' (mit dieser Buchstabenauswahl)' : ''}: ${fremd.join(', ')}</span>`; return; }
+    const g = grund(sil, offenSet);
+    ergebnis.innerHTML = `<div class="name" style="font-size:36px">${nameHtml(sil)}</div>` + (g ? `<span class="nein">gesperrt: ${g}</span>` : '<span class="ok">erlaubt</span>');
+  };
+  eingabe.onkeydown = e => { if (e.key === 'Enter') pruefen.onclick(); };
+  zeichne();
+  zeige(ziehe());
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{
+  "_hinweis": "Silbenvorrat, Regeln und Sperrliste der App. Gelesen von src/App.jsx und werkzeuge/silben_check.py. Bindestriche in der Sperrliste dienen nur der Lesbarkeit, verglichen wird ohne Bindestriche und in Kleinbuchstaben. Nach jeder Änderung: python werkzeuge/silben_check.py",
+  "stand": "16.11.2026",
+
+  "stufen": {
+    "1": {
+      "konsonanten": ["m", "l", "s", "n", "r", "f", "w", "h", "sch"],
+      "vokale": ["a", "e", "i", "o", "u"],
+      "endlaute": []
+    },
+    "2": {
+      "konsonanten": ["m", "l", "s", "n", "r", "f", "w", "h", "sch", "d", "t", "b", "p", "g", "k", "z"],
+      "vokale": ["a", "e", "i", "o", "u", "ei", "au"],
+      "endlaute": []
+    },
+    "3": {
+      "konsonanten": ["m", "l", "s", "n", "r", "f", "w", "h", "sch", "d", "t", "b", "p", "g", "k", "z"],
+      "vokale": ["a", "e", "i", "o", "u", "ei", "au"],
+      "endlaute": ["m", "n", "l", "r", "s", "t"],
+      "_endlaut_nicht_nach": "Endlaut darf nicht auf diese Vokale folgen (16.11.2026: -eir/-aur lesen sich holprig).",
+      "endlaut_nicht_nach": { "r": ["ei", "au"] }
+    }
+  },
+
+  "regeln": {
+    "silbenzahl": [2, 3],
+    "keine_gleiche_silbe_direkt_hintereinander": true,
+    "geschlossene_silbe_nur_am_ende": true,
+    "e_nur_in_letzter_silbe": false,
+    "mindestens_vokale": 2,
+    "mindestens_konsonanten": 3
+  },
+
+  "sperrliste": {
+    "_unpassend": "Gesperrt, sobald die Buchstabenfolge IRGENDWO im Namen steht (Lonazimu ist also auch gesperrt).",
+    "unpassend": [
+      "ka-ka", "ka-ke", "pi-pi", "po-po", "pu-pu",
+      "schei-se", "pi-mel", "pe-nis", "mu-schi", "ti-ten", "bu-sen", "fi-ke", "fi-ken",
+      "hu-re", "lu-der", "lu-sche", "lo-ser", "ho-mo", "pe-do",
+      "na-zi", "ne-ger", "ka-na-ke", "po-la-ke", "mu-sel",
+      "sa-tan", "ta-li-ban", "ha-mas", "pu-tin", "bi-den",
+      "fo-ze", "ti-te", "po-pen", "ho-de", "ni-pel", "nu-te", "pu-si", "hu-so",
+      "pi-se", "ko-ze", "po-pel", "de-pe", "do-fi", "du-mi", "pe-ner", "zi-ke",
+      "ni-ga", "ni-ger", "te-ror", "ha-schi", "ki-fen"
+    ],
+    "_unpassende_silben": "Einzelsilben, die nie gezogen werden (nur geschlossene Endsilben der Stufe 3 betroffen).",
+    "unpassende_silben": ["kot", "pis", "scheis", "tot"],
+
+    "_ganzer_name": "Die folgenden Listen sperren nur, wenn der GANZE Name genau so lautet (Lo-se ist gesperrt, Lo-se-mi nicht).",
+    "echte_woerter": [
+      "ma-ma", "pa-pa", "so-fa", "li-mo", "ki-no", "ki-lo", "to-fu", "tu-ba", "ku-li", "mo-fa", "fo-to", "le-go", "ta-bu", "do-mi-no", "ka-ra-te", "sa-la-mi", "ro-si-ne", "si-re-ne", "mi-nu-te", "po-li-zei", "ro-bo-ter", "sa-ha-ra",
+      "la-ma", "pu-ma", "ze-bu", "ka-ki", "pi-ta", "sa-go", "so-da", "si-lo", "su-mo",
+      "ku-ba", "pe-ru", "to-go", "ma-li", "ba-li", "ne-pal", "ti-bet", "pa-ris", "le-nin",
+      "da-me", "na-me", "sa-me", "ra-be", "wa-be", "ro-be", "ga-be", "ha-se", "na-se", "ro-se", "do-se", "ho-se", "lo-se", "po-se", "mo-de", "re-de", "wa-de", "ru-te", "gu-te", "no-te", "bo-te", "ro-te", "to-te", "pu-te", "bu-de", "lu-pe", "hu-pe", "tu-be", "hu-fe", "he-fe", "zo-ne", "ze-he", "wa-re", "we-ge", "ta-ge", "sa-ge", "la-ge", "wa-ge", "mi-ne", "mi-me",
+      "schu-le", "scha-le", "scho-te", "scha-fe", "schu-he", "sche-re",
+      "rei-se", "mei-se", "lei-se", "wei-se", "sei-fe", "sei-te", "wei-te", "rei-fe", "lei-ne", "bei-ne", "schei-ne", "wei-ne", "rei-me", "kei-me", "hei-me", "gei-ge", "fei-ge", "nei-ge", "bei-de", "hei-de", "wei-de", "sei-de", "schei-de", "tei-le", "wei-le", "sei-le", "kei-le", "mei-le",
+      "pau-se", "sau-se", "lau-ge", "rau-pe", "tau-be", "hau-be", "lau-be", "lau-ne", "dau-ne", "lau-te", "sau-na", "fau-na",
+      "ta-fel", "ga-bel", "na-del", "nu-del", "pu-del", "ku-gel", "ha-gel", "ne-bel", "se-gel", "he-bel", "ka-bel", "fa-bel", "bi-bel", "ta-ler", "ma-ler", "ti-ger", "le-der", "fe-der", "ka-ter", "pa-ter", "le-ber", "bi-ber", "pu-der", "ru-der", "me-ter", "li-ter", "ha-fer", "ke-fir", "mau-er", "bau-er",
+      "be-sen", "ra-sen", "ho-sen", "na-sen", "do-sen", "ro-sen", "ha-sen", "lo-sen", "po-sen", "wa-gen", "ma-gen", "re-gen", "de-gen", "se-gen", "bo-gen", "la-den", "fa-den", "bo-den", "ha-fen", "ha-ken", "la-ken", "wa-ben", "wa-ren", "we-sen",
+      "ru-fen", "ra-ten", "ba-den", "to-ben", "lo-ben", "ho-len", "re-den", "le-ben", "le-gen", "sa-gen", "na-gen", "ta-gen", "le-sen", "ma-len", "be-ten", "ha-ben", "ge-ben", "he-ben", "we-ben", "be-ben", "ge-hen", "se-hen", "we-hen", "ru-hen", "bo-ten", "no-ten",
+      "lau-fen", "kau-fen", "tau-fen", "sau-fen", "rau-fen", "rau-ben", "tau-ben", "rau-pen", "pau-sen", "sau-sen", "dau-men",
+      "rei-ten", "lei-ten", "hei-zen", "rei-zen", "wei-nen", "mei-nen", "tei-len", "hei-len", "fei-len", "zei-gen", "nei-gen", "gei-gen", "rei-sen", "wei-sen", "rei-fen", "sei-ten",
+      "sa-lat", "pi-rat", "ka-mel", "ka-nal", "ho-tel", "mo-tor", "ro-tor", "ko-met", "na-tur", "fi-gur", "da-tum", "tu-mor", "le-mur", "pa-ket", "ma-te",
+      "so-le", "lo-he", "ru-mor", "sau-ser", "nu-de", "fi-le", "no-ne", "ni-ne", "fi-ne", "li-ne", "ti-me", "ho-me"
+    ],
+    "vornamen": [
+      "li-na", "mi-la", "le-na", "ni-na", "ti-na", "la-ra", "sa-ra", "ma-ra", "ki-ra", "mi-ra", "ne-le", "lu-na", "ha-na", "le-ni", "pau-la", "do-ra", "no-ra", "mo-na", "lo-la", "li-lo", "mi-na", "ta-ra", "pi-na", "fi-na", "ri-na", "si-na", "ro-sa", "ro-si", "su-si", "su-se", "li-sa", "li-li", "ga-bi", "da-na", "di-na", "na-la", "ma-ri", "ra-mo-na", "si-mo-ne", "sa-bi-ne", "me-li-na", "ma-li-na", "sa-lo-me", "ha-li-ma", "ta-ma-ra", "sa-mi-ra", "fa-ti-ma", "so-fi", "be-la", "mi-ka",
+      "ti-mo", "ni-ko", "to-bi", "to-ni", "lu-ka", "lu-kas", "mi-lan", "si-mon", "ti-mon", "bo-ris", "do-ris", "ka-rin", "bo-do", "hu-go", "ke-rem", "ke-mal", "mu-sa", "sa-mi", "ra-mi", "ki-mi", "nu-ri", "re-mo", "re-ne", "pe-ter"
+    ],
+    "_lesestart": "Wörter der Lesestart-WORD_LIST (Stand 14.10.2026), damit immer ein Fantasiewort entsteht. Nur die mit offenen Silben bzw. geschlossener Endsilbe können überhaupt entstehen, der Rest schadet nicht.",
+    "lesestart": [
+      "u-fo", "na-se", "ha-se", "ho-se", "ro-se", "sche-re", "hut", "wal", "bus", "eis", "ei", "baum", "haus", "maus", "zelt", "nest", "pilz", "wolf", "fisch", "schaf", "schal", "bein", "keks", "gans", "helm", "au-to", "au-ge", "di-no", "do-se", "du-sche", "ki-wi", "ka-nu", "ti-ger", "e-sel", "i-gel", "en-te", "in-sel", "lu-pe", "lei-ter", "sei-fe", "ei-mer", "fe-der", "na-del", "nu-del", "be-sen", "bi-ber", "pu-del", "tul-pe", "pal-me", "pin-sel", "wol-ke", "mu-schel", "rau-pe", "tau-be", "dau-men", "ka-mel", "sa-lat", "pa-ket", "man-tel", "kak-tus", "del-fin", "lam-pe", "ap-fel", "a-mei-se", "a-na-nas", "ba-na-ne", "me-lo-ne", "ra-ke-te", "to-ma-te", "pa-pa-gei", "ro-bo-ter", "li-ne-al", "ka-len-der", "gur-ke", "bir-ne", "kro-ne", "bre-zel", "brot", "frosch", "blu-me", "schwein", "schwan", "prinz", "pfau", "trau-be", "pla-net", "zi-tro-ne", "trom-pe-te", "kro-ko-dil", "scho-ko-la-de"
+    ],
+    "_lehrkraft": "Hier trägt die Lehrkraft weitere Namen ein (ganzer Name), z. B. die Vornamen der eigenen Klasse.",
+    "lehrkraft": []
+  }
+}
