@@ -243,12 +243,13 @@ CLAUDE.md, README.md
 ## Werkzeuge zum Prüfen
 - `python werkzeuge/silben_check.py`: vollständiger Check mit Bericht `werkzeuge/silben_bericht.md`.
 - `werkzeuge/silben_testseite.html`: Testseite zum Drehen und Prüfen einzelner Namen. Start über den Eintrag „silbenmonster“ in `Deutschunterricht\.claude\launch.json` (Port 8124), dann `/werkzeuge/silben_testseite.html` öffnen.
+- `node werkzeuge/bilder_erzeugen.mjs symbol` erzeugt `public/apple-touch-icon.png` (180 × 180, Monster „Lomufi“), `… baukasten <ziel.png>` nimmt den Spielbereich der Live-Seite auf (Tablet quer, Monster verdeckt). Beides läuft über das installierte Chrome, ohne Zusatzpakete.
 - `werkzeuge/monster_uebersicht.html`: Monster-Check, alle Teile in Farbe und Umriss, Reihen, Namen ausprobieren (gleicher Server, `/werkzeuge/monster_uebersicht.html`).
 
 ## Offene Punkte
 - Silbenvorrat, Sperrliste und Monster-Baukasten sind freigegeben (16.11.2026).
 - Etappe 3 getestet, Impressum freigegeben (16.11.2026). Als Nächstes: GitHub-Repo anlegen und pushen (nur nach ausdrücklicher Freigabe), dann Eintrag auf der Übersichtsseite.
-- Erster Commit und Push am 16.11.2026, GitHub Pages (Quelle „GitHub Actions“) eingeschaltet, Actions-Lauf grün. Ein `apple-touch-icon.png` fehlt noch.
-- Live seit 16.11.2026. Eingetragen auf der Übersichtsseite (Deutsch, „Klasse 1 · Silben lesen“, mit Arbeitsblatt-Zeile), in der Tabelle „Die Apps“ und im Baukasten als Typ 21 „Silben-Spielautomat“ (Kürzel SM). Noch offen: Screenshot `Baukasten_Bilder	yp-21.png` und Karte in `Baukasten_Übersicht.html`.
+- Erster Commit und Push am 16.11.2026, GitHub Pages (Quelle „GitHub Actions“) eingeschaltet, Actions-Lauf grün.
+- Live seit 16.11.2026. Eingetragen auf der Übersichtsseite (Deutsch, „Klasse 1 · Silben lesen“, mit Arbeitsblatt-Zeile), in der Tabelle „Die Apps“ und im Baukasten als Typ 21 „Silben-Spielautomat“ (Kürzel SM). Screenshot `Baukasten_Bilder	yp-21.png` und Karte in `Baukasten_Übersicht.html` ergänzt (Filter „Ohne Tippen“).
 - README geschrieben (16.11.2026). Den Lehrplan-Wortlaut konnte Claude nicht prüfen (das PDF auf lehrplannavigator.nrw.de ließ sich nicht als Text lesen), im README ist er als „vor der Veröffentlichung prüfen“ markiert.
 - Arbeitsblätter im Druck von der Lehrkraft geprüft und für gut befunden (16.11.2026).
