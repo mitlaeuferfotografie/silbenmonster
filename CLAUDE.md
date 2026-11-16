@@ -1,7 +1,7 @@
 # Projekt: „Silbenmonster“ – Silben-Spielautomat für Klasse 1
 Stand: 16.11.2026 (Entscheidungen geklärt, Etappe 1 „Silbenvorrat“ in Arbeit) – Gemeinsame Regeln aller Apps: `..\..\Anweisung_Cowork_Lern-Apps_Allgemein.md`
 Diese Datei ist der maßgebliche Stand. Sie stammt aus `..\Anweisung_Cowork_Silbenmonster.md` und wird hier nachgeführt.
-Repo: `silbenmonster` (bisher nur lokal, noch nicht auf GitHub angelegt).
+Repo: https://github.com/mitlaeuferfotografie/silbenmonster (angelegt und erster Push am 16.11.2026). Live: https://mitlaeuferfotografie.github.io/silbenmonster/
 
 ## Deine Rolle
 Du unterstützt eine Grundschullehrkraft (NRW) beim Bau dieser Lern-App. Antworte auf Deutsch, sprich die Lehrkraft mit **Du** an und hinterfrage Ideen kritisch. Zielgruppe sind Erstklässler, die **gerade lesen lernen**. Die App muss ohne das Lesen von Anweisungen bedienbar sein (Symbole, Ton, Vormachen).
@@ -248,6 +248,7 @@ CLAUDE.md, README.md
 ## Offene Punkte
 - Silbenvorrat, Sperrliste und Monster-Baukasten sind freigegeben (16.11.2026).
 - Etappe 3 getestet, Impressum freigegeben (16.11.2026). Als Nächstes: GitHub-Repo anlegen und pushen (nur nach ausdrücklicher Freigabe), dann Eintrag auf der Übersichtsseite.
-- Noch kein Commit und kein GitHub-Repo. Ein `apple-touch-icon.png` fehlt noch.
+- Erster Commit und Push am 16.11.2026. Der Bau ist grün. Das Veröffentlichen klappt erst, wenn unter *Settings → Pages* „GitHub Actions“ als Quelle gewählt ist, danach den Lauf neu starten. Ein `apple-touch-icon.png` fehlt noch.
+- Nach dem Live-Gang: Übersichtsseite mitlaeuferfotografie.github.io und Tabelle „Die Apps“ in der allgemeinen Anweisung ergänzen, `Baukasten_Aufgabentypen.md` ergänzen (neuer Typ „Silben-Spielautomat“).
 - README geschrieben (16.11.2026). Den Lehrplan-Wortlaut konnte Claude nicht prüfen (das PDF auf lehrplannavigator.nrw.de ließ sich nicht als Text lesen), im README ist er als „vor der Veröffentlichung prüfen“ markiert.
 - Arbeitsblätter im Druck von der Lehrkraft geprüft und für gut befunden (16.11.2026).
