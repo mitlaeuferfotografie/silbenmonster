@@ -6,7 +6,7 @@ Fantasiewörter lassen sich nicht über ein Bild oder den Zusammenhang erraten. 
 
 Angeregt durch die „Monstermaschine“ von @frau_behrens_ (Instagram). Eigene Umsetzung: Name, Monster, Gestaltung und Silbenvorrat sind selbst erstellt.
 
-**Live:** https://mitlaeuferfotografie.github.io/silbenmonster/ *(noch nicht veröffentlicht)*
+**Live:** https://mitlaeuferfotografie.github.io/silbenmonster/
 
 ## Lehrplanbezug
 

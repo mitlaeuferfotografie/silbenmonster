@@ -215,7 +215,7 @@ CLAUDE.md, README.md
 - **e** in jeder Silbe erlaubt.
 - **Vorlesen** nur nach Freischaltung durch die Lehrkraft (`?vorlesen=1`, Standard aus) und nur nach dem Aufdecken.
 - **Silbendateien:** Die 112 offenen Silben (Piper) kommen aus Lesestart, fehlende Endsilben werden genauso erzeugt.
-- **Quellenhinweis** auf @frau_behrens_ im README: ja, kurz („Angeregt durch die Monstermaschine von @frau_behrens_ (Instagram). Eigene Umsetzung.“).
+- **Quellenhinweis** auf @frau_behrens_ (18.11.2026 erweitert): auch in der App, als kleine Zeile unten im Lehrer-Bereich und im Impressum-Abschnitt „Idee“, Text „Idee angeregt durch die ‚Monstermaschine‘ von @frau_behrens_ (Instagram). Eigene Umsetzung.“ (Konstante `QUELLENHINWEIS`), ohne Link zu Instagram. Im README: ja, kurz („Angeregt durch die Monstermaschine von @frau_behrens_ (Instagram). Eigene Umsetzung.“).
 
 - **Sperrliste (zweite Runde):** Die 75 gängigen Vornamen bleiben gesperrt, die Klasse wird nicht eigens eingetragen. Endsilben mit r nach ei/au (-eir, -aur) sind gestrichen (`endlaut_nicht_nach` in Stufe 3). Sole, Lohe, Rumor, Sauser, Nude und File sind als echte Wörter nachgetragen; weitere Funde trägt Claude auf Zuruf nach. Teilwörter sperren weiterhin auch innerhalb eines Namens (lieber zu viel aussortieren). Vulgär- und Schimpfwörter werden in der Lautform eingetragen, wie ein Kind sie aus offenen Silben liest (Pimmel → pi-mel, Fotze → fo-ze, Nutte → nu-te). Wörter mit Konsonantenhäufung (Arsch, Wichser, Schlampe) können gar nicht entstehen.
 
@@ -236,7 +236,7 @@ CLAUDE.md, README.md
 - Monster-Reihe: die letzten 10 Monster (nur im Arbeitsspeicher). Bei `monster=aus` stehen dort nur die Namen.
 - Tastatur: Leertaste, Enter, 1/2/3. Größen werden aus der Fenstergröße berechnet (`fenster`, `walzeB`, `monsterB`, `nameGr` im Automaten): Quer stehen Automat und Monster nebeneinander, hochkant untereinander.
 - Noch offen: Vormachen beim ersten Start (animierter Finger) und Lautsprecher oben links, beides zusammen mit dem Ton in Etappe 5. Der Vorlesen-Knopf ist bei `?vorlesen=1` sichtbar, aber ausgegraut, bis die Silbendateien da sind.
-- `ImpressumModal` aus den Redezeichen-Helden übernommen. Angepasst sind App-Name, Lizenzen (Andika, Playwrite DE Grund, Thorsten, Lucide, React, Tailwind, qrcode-generator) und ein Satz in „Das Wichtigste in Kürze“ (kein Code, kein Mikrofon, QR-Code auf dem Gerät). **Von der Lehrkraft freigegeben am 16.11.2026.** Weitere Änderungen nur nach neuer Freigabe.
+- `ImpressumModal` aus den Redezeichen-Helden übernommen. Angepasst sind App-Name, Lizenzen (Andika, Playwrite DE Grund, Thorsten, Lucide, React, Tailwind, qrcode-generator) und ein Satz in „Das Wichtigste in Kürze“ (kein Code, kein Mikrofon, QR-Code auf dem Gerät). **Von der Lehrkraft freigegeben am 16.11.2026.** Weitere Änderungen nur nach neuer Freigabe. Am 18.11.2026 ausdrücklich freigegeben und ergänzt: Abschnitt „Idee“ mit dem Quellenhinweis (Konstante `QUELLENHINWEIS`, nur dieser Satz).
 - Kein Lehrer-Passwort mehr (16.11.2026). Das Zahnrad ist klein und grau, damit Kinder es nicht zufällig antippen.
 - Bauen: `bash werkzeuge/lokal_bauen.sh` → `_site/` (dasselbe Skript nutzt `pages.yml`). Lokal ansehen: Server „silbenmonster“ (Port 8124), dann `/_site/`.
 

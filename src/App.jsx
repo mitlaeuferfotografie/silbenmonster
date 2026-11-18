@@ -25,6 +25,8 @@ import { monsterSvg, merkmaleFuerName } from './monster.js';
 const APP_NAME = 'Silbenmonster';
 const STANDARD = { stufe: '1', silben: '2', b: null, monster: 'tippen', ton: true, anim: true, vorlesen: false, schrift: 'grund' };
 const REIHE_MAX = 10; // so viele Monster zeigt die Leiste unten
+// Quellenhinweis: im Lehrer-Bereich und im Impressum (Abschnitt „Idee“, Freigabe der Lehrkraft 18.11.2026). Kein Link zu Instagram.
+const QUELLENHINWEIS = 'Idee angeregt durch die ‚Monstermaschine‘ von @frau_behrens_ (Instagram). Eigene Umsetzung.';
 
 /* ================================ SILBEN ================================ */
 // Regeln wie werkzeuge/silben_check.py – bei Änderungen beide anpassen!
@@ -473,6 +475,8 @@ function LehrerBereich({ einst, setEinst, onClose, onImpressum, onBlaetter }) {
           <button onClick={onImpressum} className="text-xs text-slate-500 underline underline-offset-2 self-start">Impressum &amp; Datenschutz</button>
         </div>
       </div>
+      {/* Quellenhinweis (ohne Link, keine externen Dienste) */}
+      <p className="text-xs text-slate-400 mt-6 pt-3 border-t border-slate-200">{QUELLENHINWEIS}</p>
     </Modal>
   );
 }
@@ -694,6 +698,8 @@ function ImpressumModal({ onClose, section }) {
         <p className="mt-3">Peter Brandsch<br />Sandweg 13<br />51503 Rösrath</p>
         <p className="mt-3">E-Mail: <Mail /></p>
         <p className="mt-3">Das Silbenmonster ist ein kostenloses Lernangebot ohne Werbung.</p>
+        <H3>Idee</H3>
+        <p>{QUELLENHINWEIS}</p>
         <H3>Haftung für Inhalte</H3>
         <p>Die Inhalte dieser App wurden mit großer Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann ich jedoch keine Gewähr übernehmen. Hinweise auf Fehler nehme ich gern per E-Mail entgegen.</p>
         <H3>Urheberrecht und Lizenzen</H3>
